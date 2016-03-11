@@ -2,11 +2,15 @@
 
 Easy dealing with CSV import, including, but not limited to:
 
-  * import in any format: `String`, `csv`, `xlsx`;
-  * additional input formatting;
-  * input checkers;
-  * callbacks on errors;
-  * producing of “suggested edits” version of input (both `csv` and `xlsx` formats).
+✓ import in any format: `String`, `csv`, `xlsx`;
+
+✓ additional input formatting;
+
+✓ input checkers;
+
+✓ callbacks on errors;
+
+✓ producing of “suggested edits” version of input (both `csv` and `xlsx` formats).
 
 ## Installation
 
