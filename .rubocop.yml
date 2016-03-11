@@ -1,0 +1,18 @@
+inherit_from: .rubocop_todo.yml
+
+Style/Documentation:
+  Exclude:
+    - 'spec/**/*'
+    - 'lib/**/*'
+
+Style/RaiseArgs:
+  Exclude:
+    - 'spec/**/*'
+    - 'lib/**/*'
+  
+Style/MethodDefParentheses:
+  EnforcedStyle: require_no_parentheses
+
+Style/MultilineBlockChain:
+  Exclude:
+    - 'spec/**/*'

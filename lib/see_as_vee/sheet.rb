@@ -1,0 +1,111 @@
+require_relative 'helpers'
+
+module SeeAsVee
+  class Sheet
+    CELL_ERROR_MARKER = '☣'.freeze
+    CELL_ERROR_STYLE = {
+      bg_color: "FF880000",
+      fg_color: "FFFFFFFF",
+      sz: 14,
+      border: { style: :thin, color: "FFFF0000" }
+    }.freeze
+
+    attr_reader :rows, :formatters, :checkers
+    def initialize whatever, formatters: {}, checkers: {}
+      @formatters = formatters.map { |k, v| [str_to_sym(k), v] }.to_h
+      @checkers = checkers.map { |k, v| [str_to_sym(k), v] }.to_h
+      @rows = whatever.is_a?(Array) ? whatever : Helpers.harvest_csv(whatever)
+
+      @rows = @rows.map.with_index do |row, idx|
+        idx.zero? ? row : plough_row(row)
+      end
+    end
+
+    def values
+      @rows[1..-1]
+    end
+
+    def headers symbolic = false
+      symbolic ? @rows.first.map { |s| str_to_sym s } : @rows.first
+    end
+
+    def [] index, key = nil
+      key.nil? ? values[index] : values[index][header_index(key)]
+    end
+
+    def each
+      return enum_for unless block_given?
+
+      values.each_with_index do |row, idx|
+        result = headers.zip(row).to_h
+        errors = result.select { |_, v| malformed?(v) }
+        yield idx, errors, result
+      end
+    end
+
+    def produce csv: true, xlsx: nil
+      [csv && produce_csv, xlsx && produce_xlsx]
+    end
+
+    private
+
+    def malformed? str
+      str.to_s =~ /\A#{CELL_ERROR_MARKER}/
+    end
+
+    def produce_csv
+      Tempfile.new(['see_as_vee', '.csv']).tap do |f|
+        CSV.open(f.path, "wb") do |content|
+          @rows.each { |row| content << row }
+        end
+      end
+    end
+
+    def produce_xlsx
+      Tempfile.new(['see_as_vee', '.xlsx']).tap do |f|
+        Axlsx::Package.new do |p|
+          red = p.workbook.styles.add_style(**CELL_ERROR_STYLE)
+          p.workbook.add_worksheet(name: 'Processing errors shown in red') do |sheet|
+            @rows.each { |row| sheet.add_row row, style: row.map { |cell| malformed?(cell) ? red : nil } }
+          end
+          p.serialize(f.path)
+        end
+      end
+    end
+
+    def header_index key
+      headers(true).index(str_to_sym(key))
+    end
+
+    def str_to_sym str
+      str.is_a?(Symbol) ? str : str.downcase.gsub(/\W/, '_').to_sym
+    end
+
+    def plough_row row
+      row.map.with_index do |cell, i|
+        cell = format_cell(cell, i) unless @formatters.empty?
+        cell = check_cell(cell, i) unless @checkers.empty?
+        cell
+      end
+    end
+
+    def format_cell cell, i
+      case f = @formatters[headers(true)[i]]
+      when Proc then f.call(cell)
+      when Symbol then cell.public_send f
+      else cell
+      end
+    end
+
+    # rubocop:disable Style/MultilineTernaryOperator
+    def check_cell cell, i
+      f = @checkers[headers(true)[i]]
+      case f
+      when Proc then f.call(cell)
+      when Symbol then cell.public_send(f)
+      else true
+      end ? cell : CELL_ERROR_MARKER + cell.to_s.split('').map { |c| "#{c}\u0336" }.join
+    end
+    # rubocop:enable Style/MultilineTernaryOperator
+  end
+end
