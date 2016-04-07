@@ -29,7 +29,7 @@ Lint/UselessAssignment:
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes.
 # URISchemes: http, https
 Metrics/LineLength:
-  Max: 116
+  Max: 180
 
 # Offense count: 1
 # Cop supports --auto-correct.

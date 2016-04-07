@@ -9,6 +9,8 @@ require "see_as_vee/exceptions"
 require "see_as_vee/helpers"
 require "see_as_vee/sheet"
 
+require "see_as_vee/producers/hashes"
+
 module SeeAsVee
   def harvest whatever, formatters: {}, checkers: {}
     sheet = SeeAsVee::Sheet.new whatever, formatters: formatters, checkers: checkers
