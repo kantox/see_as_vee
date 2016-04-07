@@ -30,8 +30,12 @@ describe SeeAsVee::Producers::Hashes do
     expect(SeeAsVee::Producers::Hashes.new(input).to_sheet).to be_is_a SeeAsVee::Sheet
   end
   it 'produces a proper csv' do
-    f = SeeAsVee::Producers::Hashes.csv(input)
+    f = SeeAsVee.csv(input)
     expect(f).to be_is_a Tempfile
     expect(f.read).to eq "a,b,hello world\n42,string,\n42,,42\nstring,42,\n"
+  end
+  it 'produces a proper xlsx' do
+    f = SeeAsVee.xlsx(input)
+    expect(f).to be_is_a Tempfile
   end
 end

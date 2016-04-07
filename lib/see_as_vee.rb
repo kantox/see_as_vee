@@ -20,6 +20,16 @@ module SeeAsVee
     sheet
   end
   module_function :harvest
+
+  def csv *args
+    SeeAsVee::Producers::Hashes.csv(*args)
+  end
+  module_function :csv
+
+  def xlsx *args
+    SeeAsVee::Producers::Hashes.xlsx(*args)
+  end
+  module_function :xlsx
 end
 
 class String
