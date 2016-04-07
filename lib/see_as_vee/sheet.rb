@@ -82,6 +82,8 @@ module SeeAsVee
     end
 
     def plough_row row
+      return row if @formatters.empty? && @checkers.empty? # performance
+
       row.map.with_index do |cell, i|
         cell = format_cell(cell, i) unless @formatters.empty?
         cell = check_cell(cell, i) unless @checkers.empty?

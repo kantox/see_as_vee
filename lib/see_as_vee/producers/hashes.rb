@@ -14,7 +14,8 @@ module SeeAsVee
       end
 
       def add *args, **params
-        @joined = nil
+        @keys, @joined = [nil] * 2
+
         @hashes << params unless params.size.zero?
         @hashes |= args.flatten.select(&Hash.method(:===))
         normalize!(false)
@@ -26,6 +27,7 @@ module SeeAsVee
 
       def normalize! symbol = true # to_s otherwise
         @hashes.map!(&NORMALIZER.curry[symbol])
+        self
       end
 
       def humanize
@@ -34,22 +36,42 @@ module SeeAsVee
 
       def humanize!
         @hashes.map!(&HUMANIZER)
+        self
       end
 
       def join
-        keys = @hashes.map(&:keys).reduce(&:|)
-        @joined ||= @hashes.map { |hash| keys.zip([nil] * keys.size).to_h.merge hash }
+        return @joined if @joined
+
+        @joined = @hashes.map { |hash| keys.zip([nil] * keys.size).to_h.merge hash }
+      end
+
+      def keys
+        @keys ||= @hashes.map(&:keys).reduce(&:|)
+      end
+
+      def to_sheet
+        SeeAsVee::Sheet.new(humanize!.join.map(&:values).unshift(keys))
       end
 
       class << self
-        def join *args, normalize: :string, humanize: true
+        def join *args, normalize: :human
           Hashes.new(*args).join.tap do |result|
             case normalize
+            when :humanize, :human, :pretty then result.map!(&HUMANIZER)
             when :string, :str, :to_s then result.map!(&NORMALIZER.curry[false])
             when :symbol, :sym, :to_sym then result.map!(&NORMALIZER.curry[true])
             end
-            result.map!(&HUMANIZER) if humanize
           end
+        end
+
+        def csv *args
+          result, = Hashes.new(*args).to_sheet.produce
+          result
+        end
+
+        def xlsx *args
+          _, result = Hashes.new(*args).to_sheet.produce csv: false, xlsx: true
+          result
         end
       end
     end
