@@ -1,4 +1,8 @@
-require 'filemagic'
+begin
+  require 'filemagic'
+rescue LoadError => e
+end
+
 require 'axlsx'
 require 'simple_xlsx_reader'
 require 'csv'

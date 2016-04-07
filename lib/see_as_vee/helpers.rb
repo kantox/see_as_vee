@@ -10,7 +10,11 @@ module SeeAsVee
               else
                 raise SeeAsVee::Exceptions::BadInputError.new(whatever)
               end
-      [file, Privates.handler_name(FileMagic.new.file(file.path))].tap do |_, handle|
+      if (Kernel.const_defined?('FileMagic'))
+        [file, Privates.handler_name(FileMagic.new.file(file.path))]
+      else
+        [file, Privates.handler_by_ext(file.path[/(?<=\.).*\z/])]
+      end.tap do |_, handle|
         raise SeeAsVee::Exceptions::FileFormatError.new(file.path) if handle.nil?
       end
     end
@@ -29,7 +33,7 @@ module SeeAsVee
       }.freeze
 
       def tempfile bytes
-        Tempfile.new('see_as_vee').tap { |f| f.syswrite(bytes) if bytes }
+        Tempfile.new(['see_as_vee', '.csv']).tap { |f| f.syswrite(bytes) if bytes }
       end
       module_function :tempfile
 
@@ -37,6 +41,11 @@ module SeeAsVee
         (FILE_TYPE.detect { |k, _| k =~ file_type } || []).last
       end
       module_function :handler_name
+
+      def handler_by_ext ext
+        ext.to_sym if %w|xlsx csv|.include?(ext)
+      end
+      module_function :handler_by_ext
 
       def xlsx_to_array path
         SimpleXlsxReader.open(path).sheets.first.rows

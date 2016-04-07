@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'simple_xlsx_reader'
   spec.add_dependency 'axlsx'
-  spec.add_dependency 'ruby-filemagic'
+  # spec.add_dependency 'ruby-filemagic', require: false
   spec.add_dependency 'mutations', '~> 0.7'
 
   spec.add_development_dependency 'bundler', '~> 1.10'
