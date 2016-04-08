@@ -57,7 +57,7 @@ module SeeAsVee
       Tempfile.new(['see_as_vee', '.csv']).tap do |f|
         CSV.open(f.path, "wb") do |content|
           @rows.each { |row| content << row }
-        end
+        end unless @rows.empty?
       end
     end
 
