@@ -1,5 +1,10 @@
 # SeeAsVee
 
+[![Build Status](https://travis-ci.org/am-kantox/see_as_vee.svg?branch=master)](https://travis-ci.org/am-kantox/see_as_vee)
+[![Code Climate](https://codeclimate.com/github/am-kantox/see_as_vee/badges/gpa.svg)](https://codeclimate.com/github/am-kantox/see_as_vee)
+[![Test Coverage](https://codeclimate.com/github/am-kantox/see_as_vee/badges/coverage.svg)](https://codeclimate.com/github/am-kantox/see_as_vee/coverage)
+[![Issue Count](https://codeclimate.com/github/am-kantox/see_as_vee/badges/issue_count.svg)](https://codeclimate.com/github/am-kantox/see_as_vee)
+
 Easy dealing with CSV import, including, but not limited to:
 
 ✓ import in any format: `String`, `csv`, `xlsx`;
