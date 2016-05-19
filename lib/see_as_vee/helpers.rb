@@ -10,7 +10,7 @@ module SeeAsVee
               else
                 raise SeeAsVee::Exceptions::BadInputError.new(whatever)
               end
-      if (Kernel.const_defined?('FileMagic'))
+      if Kernel.const_defined?('FileMagic')
         [file, Privates.handler_name(FileMagic.new.file(file.path))]
       else
         [file, Privates.handler_by_ext(file.path[/(?<=\.).*\z/])]
@@ -43,7 +43,7 @@ module SeeAsVee
       module_function :handler_name
 
       def handler_by_ext ext
-        ext.to_sym if %w|xlsx csv|.include?(ext)
+        ext.to_sym if %w(xlsx csv).include?(ext)
       end
       module_function :handler_by_ext
 

@@ -1,6 +1,7 @@
 begin
   require 'filemagic'
 rescue LoadError => e
+  # OK, we do not have filemagick, no worries
 end
 
 require 'axlsx'
