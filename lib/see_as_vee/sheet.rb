@@ -8,7 +8,7 @@ module SeeAsVee
       fg_color: "FFFFFFFF",
       sz: 14,
       border: { style: :thin, color: "FFFF0000" }
-    }.freeze
+    } # don’t .freeze because asxlx wants to modify it
 
     attr_reader :rows, :formatters, :checkers
     def initialize whatever, formatters: {}, checkers: {}
