@@ -8,7 +8,7 @@ module SeeAsVee
       fg_color: "FFFFFFFF",
       sz: 14,
       border: { style: :thin, color: "FFFF0000" }
-    } # don’t .freeze because asxlx wants to modify it
+    }.freeze
 
     attr_reader :rows, :formatters, :checkers
     def initialize whatever, formatters: {}, checkers: {}
@@ -43,8 +43,8 @@ module SeeAsVee
       end
     end
 
-    def produce csv: true, xlsx: nil
-      [csv && produce_csv, xlsx && produce_xlsx]
+    def produce csv: true, xlsx: nil, **params
+      [csv && produce_csv(**params), xlsx && produce_xlsx(**params)]
     end
 
     private
@@ -53,18 +53,18 @@ module SeeAsVee
       str.to_s =~ /\A#{CELL_ERROR_MARKER}/
     end
 
-    def produce_csv
+    def produce_csv **params
       Tempfile.new(['see_as_vee', '.csv']).tap do |f|
-        CSV.open(f.path, "wb") do |content|
+        CSV.open(f.path, "wb", params) do |content|
           @rows.each { |row| content << row }
         end unless @rows.empty?
       end
     end
 
-    def produce_xlsx
+    def produce_xlsx **_params
       Tempfile.new(['see_as_vee', '.xlsx']).tap do |f|
         Axlsx::Package.new do |p|
-          red = p.workbook.styles.add_style(**CELL_ERROR_STYLE)
+          red = p.workbook.styles.add_style(**CELL_ERROR_STYLE.dup)
           p.workbook.add_worksheet(name: 'Processing errors shown in red') do |sheet|
             @rows.each { |row| sheet.add_row row, style: row.map { |cell| malformed?(cell) ? red : nil } }
           end

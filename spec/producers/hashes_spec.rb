@@ -34,6 +34,11 @@ describe SeeAsVee::Producers::Hashes do
     expect(f).to be_is_a Tempfile
     expect(f.read).to eq "a,b,hello world\n42,string,\n42,,42\nstring,42,\n"
   end
+  it 'accepts params while producing csv' do
+    f = SeeAsVee.csv(input, col_sep: "\t")
+    expect(f).to be_is_a Tempfile
+    expect(f.read).to eq "a\tb\thello world\n42\tstring\t\n42\t\t42\nstring\t42\t\n"
+  end
   it 'produces a proper xlsx' do
     f = SeeAsVee.xlsx(input)
     expect(f).to be_is_a Tempfile

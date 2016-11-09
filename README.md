@@ -35,6 +35,8 @@ Or install it yourself as:
 
 ## Usage
 
+### Load and validate
+
 ```ruby
     sheet = SeeAsVee.harvest(
       'spec/fixtures/velocity.xlsx', # file exists ⇒ will be loaded
@@ -55,6 +57,25 @@ Or install it yourself as:
     expect(xlsx.length > 0).to eq true
 ```
 
+### Produce
+
+```ruby
+    ▶ require 'see_as_vee'
+    #⇒ true
+    ▶ SeeAsVee.csv(
+    ▷   [{name: 'Aleksei', value: 42}, {name: 'John', value: 3.14}], col_sep: "\t"
+    ▷ )
+    #⇒ #<File:/tmp/am/see_as_vee20161109-6031-6he5m7.csv>
+    #  -rw------- 1 am am 32 nov  9 07:18 /tmp/am/see_as_vee20161109-6031-6he5m7.csv
+    ▶ .cat /tmp/am/see_as_vee20161109-6031-6he5m7.csv
+    #⇒ name	value
+    #  Aleksei	42
+    #  John	3.14
+```
+
+## Changelog
+
+### `0.2.5` support for CSV options
 
 ## Development
 
