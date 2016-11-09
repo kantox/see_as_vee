@@ -64,13 +64,13 @@ module SeeAsVee
           end
         end
 
-        def csv *args
-          result, = Hashes.new(*args).to_sheet.produce
+        def csv *args, **params
+          result, = Hashes.new(*args).to_sheet.produce csv: true, xlsx: false, **params
           result
         end
 
-        def xlsx *args
-          _, result = Hashes.new(*args).to_sheet.produce csv: false, xlsx: true
+        def xlsx *args, **params
+          _, result = Hashes.new(*args).to_sheet.produce csv: false, xlsx: true, **params
           result
         end
       end

@@ -26,13 +26,13 @@ module SeeAsVee
   end
   module_function :harvest
 
-  def csv *args
-    SeeAsVee::Producers::Hashes.csv(*args)
+  def csv *args, **params
+    SeeAsVee::Producers::Hashes.csv(*args, **params)
   end
   module_function :csv
 
-  def xlsx *args
-    SeeAsVee::Producers::Hashes.xlsx(*args)
+  def xlsx *args, **params
+    SeeAsVee::Producers::Hashes.xlsx(*args, **params)
   end
   module_function :xlsx
 end
