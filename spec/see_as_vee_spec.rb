@@ -5,18 +5,6 @@ describe SeeAsVee do
     expect(SeeAsVee::VERSION).not_to be nil
   end
 
-  it 'properly determines file types' do
-    [
-      ['spec/fixtures/velocity.xlsx', :xlsx],
-      ['spec/fixtures/velocity.csv', :csv],
-      ["a,b,c\n1,2,3", :csv]
-    ].map do |f, matcher|
-      [SeeAsVee::Helpers.file_with_type(f), matcher]
-    end.each do |(_, type), matcher|
-      expect(type).to eq(matcher)
-    end
-  end
-
   it 'throws an exception on invalid input' do
     expect { SeeAsVee::Helpers.file_with_type(5) }.to raise_error(SeeAsVee::Exceptions::BadInputError)
   end

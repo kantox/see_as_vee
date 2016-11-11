@@ -1,8 +1,15 @@
 begin
   require 'filemagic'
-rescue LoadError => e
+rescue LoadError
   # OK, we do not have filemagick, no worries
-  puts "We were unable to find “filemagick,” will use simple file guessing [#{e.message}]."
+  class FileMagic
+    # file velocity.csv:  UTF-8 Unicode text, with very long lines
+    # file velocity.xls:  Composite Document File V2 Document, Little Endian, Os: Windows, Version 1.0, Code page: -535, Revision Number: 0
+    # file velocity.xlsx: Microsoft OOXML
+    def file file
+      `file #{file}`.gsub(/\A#{file}:\s*/, '')
+    end
+  end
 end
 
 require 'axlsx'
