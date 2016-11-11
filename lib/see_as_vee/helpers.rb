@@ -10,11 +10,12 @@ module SeeAsVee
               else
                 raise SeeAsVee::Exceptions::BadInputError.new(whatever)
               end
-      if Kernel.const_defined?('FileMagic')
-        [file, Privates.handler_name(FileMagic.new.file(file.path))]
-      else
-        [file, Privates.handler_by_ext(file.path[/(?<=\.).*\z/])]
-      end.tap do |_, handle|
+
+      [
+        file,
+        (Privates.handler_name(FileMagic.new.file(file.path)) if Kernel.const_defined?('FileMagic')) ||
+          Privates.handler_by_ext(file.path[/(?<=\.).*\z/])
+      ].tap do |_, handle|
         raise SeeAsVee::Exceptions::FileFormatError.new(file.path) if handle.nil?
       end
     end
