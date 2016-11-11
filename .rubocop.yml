@@ -15,6 +15,9 @@ Style/AsciiComments:
     - 'spec/**/*'
     - 'lib/**/*'
 
+Metrics/ClassLength:
+  Max: 200
+
 Metrics/CyclomaticComplexity:
   Max: 21
 

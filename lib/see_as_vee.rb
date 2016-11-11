@@ -2,6 +2,7 @@ begin
   require 'filemagic'
 rescue LoadError => e
   # OK, we do not have filemagick, no worries
+  puts "We were unable to find “filemagick,” will use simple file guessing [#{e.message}]."
 end
 
 require 'axlsx'
@@ -25,6 +26,11 @@ module SeeAsVee
     sheet
   end
   module_function :harvest
+
+  def validate whatever, schema
+    SeeAsVee::Sheet.new(whatever).map(&schema)
+  end
+  module_function :validate
 
   def csv *args, **params
     SeeAsVee::Producers::Hashes.csv(*args, **params)

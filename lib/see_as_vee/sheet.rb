@@ -46,6 +46,14 @@ module SeeAsVee
       end
     end
 
+    def map
+      return enum_for unless block_given?
+
+      values.map do |row|
+        yield headers(true).zip(row).to_h
+      end
+    end
+
     def produce csv: true, xlsx: nil, **params
       [csv && produce_csv(**params), xlsx && produce_xlsx(**params)]
     end
