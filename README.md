@@ -53,6 +53,23 @@ Or install it yourself as:
     expect(xlsx.length > 0).to eq true
 ```
 
+### `Dry::Validation`
+
+From the version `0.4.0` we support dry validation of the data given:
+
+```ruby
+    schema = Dry::Validation.Form do
+      required(:reference) { filled? > str? }
+      required(:trade_date).filled(:date?)
+      required(:notional).filled(:float?)
+      required(:notional_currency).filled(:str?)
+    end
+    validation = SeeAsVee.validate('spec/fixtures/velo.csv', schema)
+    expect(validation.all? { |vr| vr.errors.empty? }).to be true
+```
+
+The returned value is an array of [validation results](http://dry-rb.org/gems/dry-validation/basics/).
+
 ### Produce
 
 ```ruby
@@ -70,6 +87,10 @@ Or install it yourself as:
 ```
 
 ## Changelog
+
+### `0.4.0` support for `Dry::Validation`
+
+### `0.3.0` support for XLSX options
 
 ### `0.2.5` support for CSV options
 
