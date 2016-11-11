@@ -80,7 +80,7 @@ module SeeAsVee
           p.workbook.add_worksheet(**axlsx_params) do |sheet|
             @rows.each do |row|
               styles = row.map { |cell| malformed?(cell) ? red : nil }
-              row = row.map { |cell| cell.to_s.gsub(/\A#{params[:cem]}/, '') if malformed?(cell) } if params[:lem]
+              row = row.map { |cell| cell.to_s.gsub(/\A#{CELL_ERROR_MARKER}/, '') if malformed?(cell) } if params[:lem]
               sheet.add_row row, style: styles
             end
           end
