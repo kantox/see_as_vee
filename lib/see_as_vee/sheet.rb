@@ -2,15 +2,18 @@ require_relative 'helpers'
 
 module SeeAsVee
   class Sheet
-    CELL_ERROR_MARKER = '☣'.freeze
+    CELL_ERROR_MARKER = '⚑ '.freeze
     CELL_ERROR_STYLE = {
       bg_color: "FF880000",
       fg_color: "FFFFFFFF",
       sz: 14,
       border: { style: :thin, color: "FFFF0000" }
     }.freeze
+    WORK_SHEET_NAME = 'Processing errors shown in red'.freeze
+    LEAVE_ERROR_MARKER = true
 
     attr_reader :rows, :formatters, :checkers
+
     def initialize whatever, formatters: {}, checkers: {}
       @formatters = formatters.map { |k, v| [str_to_sym(k), v] }.to_h
       @checkers = checkers.map { |k, v| [str_to_sym(k), v] }.to_h
@@ -43,6 +46,14 @@ module SeeAsVee
       end
     end
 
+    def map
+      return enum_for unless block_given?
+
+      values.map do |row|
+        yield headers(true).zip(row).to_h
+      end
+    end
+
     def produce csv: true, xlsx: nil, **params
       [csv && produce_csv(**params), xlsx && produce_xlsx(**params)]
     end
@@ -50,7 +61,7 @@ module SeeAsVee
     private
 
     def malformed? str
-      str.to_s =~ /\A#{CELL_ERROR_MARKER}/
+      str.to_s.start_with? CELL_ERROR_MARKER
     end
 
     def produce_csv **params
@@ -61,12 +72,17 @@ module SeeAsVee
       end
     end
 
-    def produce_xlsx **_params
+    def produce_xlsx **params
+      params, axlsx_params = split_params(params)
       Tempfile.new(['see_as_vee', '.xlsx']).tap do |f|
         Axlsx::Package.new do |p|
-          red = p.workbook.styles.add_style(**CELL_ERROR_STYLE.dup)
-          p.workbook.add_worksheet(name: 'Processing errors shown in red') do |sheet|
-            @rows.each { |row| sheet.add_row row, style: row.map { |cell| malformed?(cell) ? red : nil } }
+          red = p.workbook.styles.add_style(**params[:ces]) if params[:ces].is_a?(Hash)
+          p.workbook.add_worksheet(**axlsx_params) do |sheet|
+            @rows.each do |row|
+              styles = row.map { |cell| malformed?(cell) ? red : nil }
+              row = row.map { |cell| cell.to_s.gsub(/\A#{params[:cem]}/, '') if malformed?(cell) } if params[:lem]
+              sheet.add_row row, style: styles
+            end
           end
           p.serialize(f.path)
         end
@@ -109,5 +125,14 @@ module SeeAsVee
       end ? cell : CELL_ERROR_MARKER + cell.to_s.split('').map { |c| "#{c}\u0336" }.join
     end
     # rubocop:enable Style/MultilineTernaryOperator
+
+    def split_params params
+      params = params.dup
+      [
+        { ces: params.delete(:cell_error_style) { CELL_ERROR_STYLE.dup },
+          lem: params.delete(:leave_error_marker) { LEAVE_ERROR_MARKER } },
+        { name: WORK_SHEET_NAME }.merge(params)
+      ]
+    end
   end
 end
