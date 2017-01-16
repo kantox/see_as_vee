@@ -16,13 +16,13 @@ require 'axlsx'
 require 'simple_xlsx_reader'
 require 'csv'
 
-require "see_as_vee/version"
-require "see_as_vee/exceptions"
+require 'see_as_vee/version'
+require 'see_as_vee/exceptions'
 
-require "see_as_vee/helpers"
-require "see_as_vee/sheet"
+require 'see_as_vee/helpers'
+require 'see_as_vee/sheet'
 
-require "see_as_vee/producers/hashes"
+require 'see_as_vee/producers/hashes'
 
 module SeeAsVee
   def harvest whatever, formatters: {}, checkers: {}

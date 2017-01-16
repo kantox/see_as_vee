@@ -1,6 +1,7 @@
 module SeeAsVee
   module Producers
     class Hashes
+      INTERNAL_PARAMS = %i|ungroup delimiter|.freeze
       NORMALIZER = ->(symbol, hash) { hash.map { |k, v| [k.public_send(symbol ? :to_sym : :to_s), v] }.to_h }.freeze
       HUMANIZER = lambda do |hash|
         hash.map do |k, v|
@@ -10,14 +11,13 @@ module SeeAsVee
 
       def initialize *args, **params
         @hashes = []
-        add(*args, **params)
+        @params = params
+        add(*args)
       end
 
-      def add *args, **params
+      def add *args
         @keys, @joined = [nil] * 2
-
-        @hashes << params unless params.size.zero?
-        @hashes |= args.flatten.select(&Hash.method(:===))
+        @hashes |= degroup(args.flatten.select(&Hash.method(:===)), @params[:ungroup], @params[:delimiter] || ',')
         normalize!(false)
       end
 
@@ -53,6 +53,22 @@ module SeeAsVee
         SeeAsVee::Sheet.new(humanize!.join.map(&:values).unshift(keys))
       end
 
+      private
+
+      def degroup hashes, columns, delimiter
+        return hashes if (columns = [*columns]).empty?
+
+        hashes.tap do |hs|
+          hs.each do |hash|
+            columns.each do |column|
+              hash.delete(column).split(delimiter).each.with_index(1) do |value, idx|
+                hash["#{column}_#{idx}"] = value
+              end
+            end
+          end
+        end
+      end
+
       class << self
         def join *args, normalize: :human
           Hashes.new(*args).join.tap do |result|
@@ -65,13 +81,25 @@ module SeeAsVee
         end
 
         def csv *args, **params
-          result, = Hashes.new(*args).to_sheet.produce csv: true, xlsx: false, **params
+          constructor_params, params = split_params(**params)
+          result, = Hashes.new(*args, **constructor_params).to_sheet.produce csv: true, xlsx: false, **params
           result
         end
 
         def xlsx *args, **params
-          _, result = Hashes.new(*args).to_sheet.produce csv: false, xlsx: true, **params
+          constructor_params, params = split_params(**params)
+          _, result = Hashes.new(*args, **constructor_params).to_sheet.produce csv: false, xlsx: true, **params
           result
+        end
+
+        # **NB** this method is NOT idempotent!
+        def split_params **params
+          [
+            INTERNAL_PARAMS.each_with_object({}) do |param, acc|
+              acc[param] = params.delete(param)
+            end.reject { |_, v| v.nil? },
+            params
+          ]
         end
       end
     end

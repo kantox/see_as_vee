@@ -4,10 +4,10 @@ module SeeAsVee
   class Sheet
     CELL_ERROR_MARKER = '⚑ '.freeze
     CELL_ERROR_STYLE = {
-      bg_color: "FF880000",
-      fg_color: "FFFFFFFF",
+      bg_color: 'FF880000',
+      fg_color: 'FFFFFFFF',
       sz: 14,
-      border: { style: :thin, color: "FFFF0000" }
+      border: { style: :thin, color: 'FFFF0000' }
     }.freeze
     WORK_SHEET_NAME = 'Processing errors shown in red'.freeze
     LEAVE_ERROR_MARKER = true

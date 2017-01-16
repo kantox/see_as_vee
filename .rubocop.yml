@@ -39,3 +39,8 @@ Style/MethodDefParentheses:
 Style/MultilineBlockChain:
   Exclude:
     - 'spec/**/*'
+    - 'lib/see_as_vee/producers/hashes.rb'
+
+Style/PercentLiteralDelimiters:
+  Exclude:
+    - 'lib/see_as_vee/producers/hashes.rb'

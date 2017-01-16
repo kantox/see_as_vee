@@ -86,7 +86,30 @@ The returned value is an array of [validation results](http://dry-rb.org/gems/dr
     #  John	3.14
 ```
 
+### Expand `GROUP_CONCAT` column
+
+From the version `0.4.5` we support expanding the column produced by `GROUP_CONCAT`
+
+```ruby
+    ▶ require 'see_as_vee'
+    #⇒ true
+    ▶ SeeAsVee.csv(
+    ▷   [{name: 'Aleksei', value: 42, nicks: 'matiushkin,mudasobwa,am-kantox'},
+    ▷    {name: 'Saverio', value: 3.14, nicks: 'trioni,rewritten,saverio-kantox'}],
+    ▷   col_sep: "\t", ungroup: 2)
+    #⇒ #<File:/tmp/am/see_as_vee20161109-6031-6he5m7.csv>
+    #  -rw------- 1 am am 32 nov  9 07:18 /tmp/am/see_as_vee20161109-6031-6he5m7.csv
+    ▶ .cat /tmp/am/see_as_vee20161109-6031-6he5m7.csv
+    #⇒ name	    value nick 1      nick 2     nick 3
+    #  Aleksei  42    matiushkin  mudasobwa  am-kantox
+    #  Saverio  3.14  trioni      rewritten  saverio-kantox
+```
+
 ## Changelog
+
+### `0.4.5` support for expanding `GROUP_CONCAT` column
+
+
 
 ### `0.4.0` support for `Dry::Validation`
 

@@ -8,6 +8,12 @@ describe SeeAsVee::Producers::Hashes do
       { 'a' => :string, b: 42 }
     ]
   end
+  let!(:input_grouped) do
+    [
+      { name: 'Aleksei', value: 42, nicks: 'matiushkin,mudasobwa,am-kantox' },
+      { name: 'Saverio', value: 3.14, nicks: 'trioni,rewritten,saverio-kantox' }
+    ]
+  end
   let!(:output_sym) do
     [
       { a: 42, b: :string, hello_world: nil },
@@ -38,6 +44,11 @@ describe SeeAsVee::Producers::Hashes do
     f = SeeAsVee.csv(input, col_sep: "\t")
     expect(f).to be_is_a Tempfile
     expect(f.read).to eq "a\tb\thello world\n42\tstring\t\n42\t\t42\nstring\t42\t\n"
+  end
+  it 'properly handles “ungroup” param' do
+    f = SeeAsVee.csv(input_grouped, ungroup: :nicks)
+    expect(f).to be_is_a Tempfile
+    expect(f.read).to eq "name,value,nicks 1,nicks 2,nicks 3\nAleksei,42,matiushkin,mudasobwa,am-kantox\nSaverio,3.14,trioni,rewritten,saverio-kantox\n"
   end
   it 'produces a proper xlsx' do
     f = SeeAsVee.xlsx(input)
