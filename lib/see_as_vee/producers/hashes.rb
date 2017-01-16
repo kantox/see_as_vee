@@ -61,7 +61,11 @@ module SeeAsVee
         hashes.tap do |hs|
           hs.each do |hash|
             columns.each do |column|
-              hash.delete(column).split(delimiter).each.with_index(1) do |value, idx|
+              case c = hash.delete(column)
+              when Array then c
+              when String then c.split(delimiter)
+              else [c.inspect]
+              end.each.with_index(1) do |value, idx|
                 hash["#{column}_#{idx}"] = value
               end
             end
