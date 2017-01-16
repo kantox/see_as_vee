@@ -96,7 +96,7 @@ From the version `0.4.5` we support expanding the column produced by `GROUP_CONC
     ▶ SeeAsVee.csv(
     ▷   [{name: 'Aleksei', value: 42, nicks: 'matiushkin,mudasobwa,am-kantox'},
     ▷    {name: 'Saverio', value: 3.14, nicks: 'trioni,rewritten,saverio-kantox'}],
-    ▷   col_sep: "\t", ungroup: 2)
+    ▷   col_sep: "\t", ungroup: :nicks)
     #⇒ #<File:/tmp/am/see_as_vee20161109-6031-6he5m7.csv>
     #  -rw------- 1 am am 32 nov  9 07:18 /tmp/am/see_as_vee20161109-6031-6he5m7.csv
     ▶ .cat /tmp/am/see_as_vee20161109-6031-6he5m7.csv
