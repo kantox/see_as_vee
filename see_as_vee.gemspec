@@ -28,13 +28,13 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'simple_xlsx_reader'
   spec.add_dependency 'axlsx'
   # spec.add_dependency 'ruby-filemagic', require: false
-  spec.add_dependency 'dry-mutations'
-
+  
   spec.add_development_dependency 'bundler', '~> 1.10'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'awesome_print'
+  spec.add_development_dependency 'dry-validation'
 
   # spec.add_development_dependency 'codeclimate-test-reporter'
   # spec.add_development_dependency 'simplecov', '~> 0.12.0'
