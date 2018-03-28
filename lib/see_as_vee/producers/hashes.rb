@@ -17,7 +17,7 @@ module SeeAsVee
 
       def add *args
         @keys, @joined = [nil] * 2
-        @hashes |= degroup(args.flatten.select(&Hash.method(:===)), @params[:ungroup], @params[:delimiter] || ',')
+        @hashes += degroup(args.flatten.select(&Hash.method(:===)), @params[:ungroup], @params[:delimiter] || ',')
         normalize!(false)
       end
 

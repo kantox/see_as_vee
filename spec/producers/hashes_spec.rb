@@ -1,38 +1,41 @@
 require 'spec_helper'
 
 describe SeeAsVee::Producers::Hashes do
-  let!(:input) do
+  let(:input) do
     [
       { a: 42, 'b' => :string },
       { a: 42, hello_world: 42 },
       { 'a' => :string, b: 42 }
     ]
   end
-  let!(:input_grouped_string) do
+  let(:input_grouped_string) do
     [
       { name: 'Aleksei', value: 42, nicks: 'matiushkin,mudasobwa,am-kantox' },
       { name: 'Saverio', value: 3.14, nicks: 'trioni,rewritten,saverio-kantox' }
     ]
   end
-  let!(:input_grouped_array) do
+  let(:input_grouped_array) do
     [
       { name: 'Aleksei', value: 42, nicks: %w|matiushkin mudasobwa am-kantox| },
       { name: 'Saverio', value: 3.14, nicks: %w|trioni rewritten saverio-kantox| }
     ]
   end
-  let!(:output_sym) do
+  let(:output_sym) do
     [
       { a: 42, b: :string, hello_world: nil },
       { a: 42, b: nil, hello_world: 42 },
       { a: :string, b: 42, hello_world: nil }
     ]
   end
-  let!(:output_str) do
+  let(:output_str) do
     [
       { 'a' => 42, 'b' => :string, 'hello world' => nil },
       { 'a' => 42, 'b' => nil, 'hello world' => 42 },
       { 'a' => :string, 'b' => 42, 'hello world' => nil }
     ]
+  end
+  let(:same_lines) do
+    [{ a: 'b' }, { a: 'b' }, { c: 'd' }]
   end
   it 'joins hashes properly' do
     expect(SeeAsVee::Producers::Hashes.join(input, normalize: :sym)).to eq output_sym
@@ -64,5 +67,9 @@ describe SeeAsVee::Producers::Hashes do
   it 'produces a proper xlsx' do
     f = SeeAsVee.xlsx(input)
     expect(f).to be_is_a Tempfile
+  end
+  it 'properly handles the same lines' do
+    result = SeeAsVee.csv(same_lines).read
+    expect(result).to eq("a,c\nb,\nb,\n,d\n")
   end
 end

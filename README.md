@@ -7,10 +7,10 @@
 
 Easy dealing with CSV import, including, but not limited to:
 
-✓ import in any format: `String`, `csv`, `xlsx`;  
-✓ additional input formatting;  
-✓ input checkers;  
-✓ callbacks on errors;  
+✓ import in any format: `String`, `csv`, `xlsx`;
+✓ additional input formatting;
+✓ input checkers;
+✓ callbacks on errors;
 ✓ producing of “suggested edits” version of input (both `csv` and `xlsx` formats).
 
 ## Installation
@@ -123,6 +123,8 @@ From the version `0.4.5` we support expanding the column produced by `GROUP_CONC
 ```
 
 ## Changelog
+
+### `0.4.8` _bugfix_ allow same lines in the input
 
 ### `0.4.5` support for expanding `GROUP_CONCAT` column
 
