@@ -125,6 +125,8 @@ From the version `0.4.5` we support expanding the column produced by `GROUP_CONC
 
 ## Changelog
 
+### `0.5.0` supporting all versions of `dry-validation`
+
 ### `0.4.9` _`squish`_
 
 ### `0.4.8` _bugfix_ allow same lines in the input
