@@ -106,7 +106,8 @@ describe SeeAsVee do
   end
 
   it "applies schema as checker" do
-    schema = Dry::Validation.Form do
+    m = %w[Params Form].detect(&Dry::Validation.method(:respond_to?))
+    schema = Dry::Validation.public_send(m) do
       required(:reference) { filled? > str? }
       required(:parent).value(:empty?)
       required(:user).filled(:str?)

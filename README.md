@@ -58,14 +58,15 @@ Or install it yourself as:
 From the version `0.4.0` we support dry validation of the data given:
 
 ```ruby
-    schema = Dry::Validation.Form do
-      required(:reference) { filled? > str? }
-      required(:trade_date).filled(:date?)
-      required(:notional).filled(:float?)
-      required(:notional_currency).filled(:str?)
-    end
-    validation = SeeAsVee.validate('spec/fixtures/velo.csv', schema)
-    expect(validation.all? { |vr| vr.errors.empty? }).to be true
+# Dry::Validation.Form if you are using dry-validation < 0.12
+schema = Dry::Validation.Params do
+  required(:reference) { filled? > str? }
+  required(:trade_date).filled(:date?)
+  required(:notional).filled(:float?)
+  required(:notional_currency).filled(:str?)
+end
+validation = SeeAsVee.validate('spec/fixtures/velo.csv', schema)
+expect(validation.all? { |vr| vr.errors.empty? }).to be true
 ```
 
 The returned value is an array of [validation results](http://dry-rb.org/gems/dry-validation/basics/).
