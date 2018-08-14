@@ -49,6 +49,14 @@ describe SeeAsVee::Producers::Hashes do
     expect(f).to be_is_a Tempfile
     expect(f.read).to eq "a,b,hello world\n42,string,\n42,,42\nstring,42,\n"
   end
+  it 'produces a proper csv for MS Excel' do
+    f = SeeAsVee.csv(input, ms_excel: true)
+    expect(f).to be_is_a Tempfile
+    expect(
+      File.open(f.path, "rb:BOM|UTF-16LE") do |f|
+        break f.read.encode(Encoding::UTF_8)
+      end).to eq("a,b,hello world\n42,string,\n42,,42\nstring,42,\n")
+  end
   it 'accepts params while producing csv' do
     f = SeeAsVee.csv(input, col_sep: "\t")
     expect(f).to be_is_a Tempfile

@@ -74,10 +74,22 @@ module SeeAsVee
     end
 
     def produce_csv **params
-      Tempfile.new(['see_as_vee', '.csv']).tap do |f|
-        CSV.open(f.path, "wb", params) do |content|
-          @rows.each { |row| content << row }
-        end unless @rows.empty?
+      return if @rows.empty?
+
+      for_ms_excel = params.delete(:ms_excel) == true
+
+      Tempfile.open(['see_as_vee', '.csv']).tap do |f|
+        content =
+          CSV.generate(params) do |csv|
+            @rows.each { |row| csv << row }
+          end
+        content =
+          "\xFF\xFE".force_encoding(Encoding::UTF_16LE) <<
+          content.encode(Encoding::UTF_16LE) if for_ms_excel
+
+        mode = for_ms_excel ? "w:UTF-16LE" : "w:UTF-8"
+
+        File.open(f.path, mode) { |f| f.write content }
       end
     end
 
