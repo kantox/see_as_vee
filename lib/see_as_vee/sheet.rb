@@ -77,6 +77,7 @@ module SeeAsVee
       return if @rows.empty?
 
       for_ms_excel = params.delete(:ms_excel) == true
+      params.merge!(col_sep: "\t") if for_ms_excel
 
       Tempfile.open(['see_as_vee', '.csv']).tap do |f|
         content =

@@ -126,7 +126,7 @@ From the version `0.4.5` we support expanding the column produced by `GROUP_CONC
 
 ## Changelog
 
-### `0.6.0` allow explicit `UTF-16 LE` with `BOM` to please MS Excel users
+### `0.6.1` allow explicit `UTF-16 LE` with `BOM` to please MS Excel users
 
 ### `0.5.4` deal with duplicated and empty headers
 

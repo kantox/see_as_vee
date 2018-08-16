@@ -55,7 +55,7 @@ describe SeeAsVee::Producers::Hashes do
     expect(
       File.open(f.path, "rb:BOM|UTF-16LE") do |f|
         break f.read.encode(Encoding::UTF_8)
-      end).to eq("a,b,hello world\n42,string,\n42,,42\nstring,42,\n")
+      end).to eq("a\tb\thello world\n42\tstring\t\n42\t\t42\nstring\t42\t\n")
   end
   it 'accepts params while producing csv' do
     f = SeeAsVee.csv(input, col_sep: "\t")
