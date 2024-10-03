@@ -19,32 +19,25 @@ jobs:
         ruby-version: ['3.3']
         allow-failure: [false]
         frozen-string: [false]
-        push-gem: [true]
         include:
           - ruby-version: '3.2'
             allow-failure: true
             frozen-string: true
-            push-gem: false
           - ruby-version: '3.1'
             allow-failure: true
             frozen-string: true
-            push-gem: false
           - ruby-version: '3.0'
             allow-failure: true
             frozen-string: true
-            push-gem: false
           - ruby-version: '2.7'
             allow-failure: false
             frozen-string: true
-            push-gem: false
           - ruby-version: '2.6'
             allow-failure: false
             frozen-string: true
-            push-gem: false
           - ruby-version: '2.4'
             allow-failure: false
             frozen-string: true
-            push-gem: false
     steps:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
@@ -54,5 +47,4 @@ jobs:
 
       - run: echo "{RUBYOPT}={--enable-frozen-string-literal}" >> $GITHUB_ENV
         if: ${{ matrix.frozen-string }}
-      - run: bundle show
       - run: bin/rake
