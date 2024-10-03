@@ -29,8 +29,8 @@ module SeeAsVee
 
     module Privates
       FILE_TYPE = {
-        /\A(Microsoft OOXML|Zip archive data)/ => :xlsx,
-        /\A(UTF-8 Unicode|ASCII) text/ => :csv
+        /\A(Microsoft Excel 2007+|Microsoft OOXML|Zip archive data)/ => :xlsx,
+        /\A(CSV|UTF-8 Unicode|ASCII) text/ => :csv
       }.freeze
 
       def tempfile bytes

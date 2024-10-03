@@ -6,8 +6,9 @@ rescue LoadError
     # file velocity.csv:  UTF-8 Unicode text, with very long lines
     # file velocity.xls:  Composite Document File V2 Document, Little Endian, Os: Windows, Version 1.0, Code page: -535, Revision Number: 0
     # file velocity.xlsx: Microsoft OOXML
+    # file sesame_street_blog.xlsx: Microsoft Excel 2007+
     def file file
-      `file #{file}`.gsub(/\A#{file}:\s*/, '')
+      `file --brief #{file}`
     end
   end
 end
