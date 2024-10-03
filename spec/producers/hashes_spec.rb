@@ -49,6 +49,20 @@ describe SeeAsVee::Producers::Hashes do
     expect(f).to be_is_a Tempfile
     expect(f.read).to eq "a,b,hello world\n42,string,\n42,,42\nstring,42,\n"
   end
+  it 'skips producing empty csv by default' do
+    expect(SeeAsVee.csv([])).to eq(nil)
+  end
+  it 'allows empty csv depeding on the flag' do
+    begin
+      SeeAsVee::Config.instance.allow_producing_empty_csv_files = true
+      SeeAsVee.csv([]).tap do |file|
+        expect(file).to be_a(Tempfile)
+        expect(file.read).to eq('')
+      end
+    ensure
+      SeeAsVee::Config.instance.allow_producing_empty_csv_files = false
+    end
+  end
   it 'produces a proper csv for MS Excel' do
     f = SeeAsVee.csv(input, ms_excel: true)
     expect(f).to be_is_a Tempfile

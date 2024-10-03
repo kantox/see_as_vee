@@ -74,7 +74,7 @@ module SeeAsVee
     end
 
     def produce_csv **params
-      return if @rows.empty?
+      return if @rows.empty? && !SeeAsVee::Config.instance.allow_producing_empty_csv_files
 
       for_ms_excel = params.delete(:ms_excel) == true
       params.merge!(col_sep: "\t") if for_ms_excel
