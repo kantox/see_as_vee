@@ -31,12 +31,12 @@ Gem::Specification.new do |spec|
   #
   spec.add_dependency 'simple_xlsx_reader', '~> 1.0.5'
   # TODO: This gem not maintained anymore. Migration to `caxlsx` pending
-  spec.add_dependency 'axlsx', '~> 2.0.1'
+  spec.add_dependency 'axlsx'
   spec.add_dependency 'zip-zip'
   spec.add_dependency 'rubyzip', '~> 2.3.2'
   # spec.add_dependency 'ruby-filemagic', require: false
 
-  spec.add_development_dependency 'bundler', '> 2.3.27'
+  spec.add_development_dependency 'bundler', '> 2.3.0'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'pry'
