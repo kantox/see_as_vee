@@ -28,18 +28,13 @@ module SeeAsVee
     module_function :harvest_csv
 
     module Privates
-      FILE_TYPE = {
-        /\A(Microsoft Excel 2007+|Microsoft OOXML|Zip archive data)/ => :xlsx,
-        /\A(CSV|UTF-8 Unicode|ASCII) text/ => :csv
-      }.freeze
-
       def tempfile bytes
         Tempfile.new(['see_as_vee', '.csv']).tap { |f| f.syswrite(bytes) if bytes }
       end
       module_function :tempfile
 
       def handler_name file_type
-        (FILE_TYPE.detect { |k, _| k =~ file_type } || []).last
+        (SeeAsVee::Config.instance.file_type_mapping.detect { |k, _| k =~ file_type } || []).last
       end
       module_function :handler_name
 
