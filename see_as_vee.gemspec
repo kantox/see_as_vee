@@ -25,17 +25,27 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'simple_xlsx_reader'
+  # TODO: Newer versions cause issues with the included extension
+  #
+  # superclass mismatch for class Loader
+  #
+  spec.add_dependency 'simple_xlsx_reader', '~> 1.0.5'
+  # TODO: This gem not maintained anymore. Migration to `caxlsx` pending
   spec.add_dependency 'axlsx'
   spec.add_dependency 'zip-zip'
+  spec.add_dependency 'rubyzip', '~> 2.3.2'
   # spec.add_dependency 'ruby-filemagic', require: false
 
-  spec.add_development_dependency 'bundler', '~> 1.10'
+  spec.add_development_dependency 'bundler', '> 2.3.0'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'awesome_print'
-  spec.add_development_dependency 'dry-validation', '~> 0.9'
+  # TODO: There are some issues with dry gems versions for some ruby versions
+  # and specs failing
+  # This needs to updated and sanitized
+  spec.add_development_dependency 'dry-validation', '~> 0.13.3'
+  spec.add_development_dependency 'dry-configurable', '~> 0.11.6'
 
   # spec.add_development_dependency 'codeclimate-test-reporter'
   # spec.add_development_dependency 'simplecov', '~> 0.12.0'
