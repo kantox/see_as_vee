@@ -11,7 +11,7 @@ on:
 jobs:
   test:
     name: 'Ruby: ${{ matrix.ruby-version }}'
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     continue-on-error: ${{ matrix.allow-failure }}
     strategy:
       fail-fast: false
@@ -35,15 +35,19 @@ jobs:
           - ruby-version: '2.6'
             allow-failure: false
             frozen-string: true
-          - ruby-version: '2.4'
-            allow-failure: false
-            frozen-string: true
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby-version }}
-          bundler-cache: true
+          bundler-cache: false
+
+      - name: Install bundler
+        run: |
+          gem update --system 3.2.3
+          gem install bundler
+          bundle install
 
       - run: echo "{RUBYOPT}={--enable-frozen-string-literal}" >> $GITHUB_ENV
         if: ${{ matrix.frozen-string }}
