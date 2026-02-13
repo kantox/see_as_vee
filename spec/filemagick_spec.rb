@@ -6,6 +6,7 @@ describe SeeAsVee::Helpers do
       [
         [File.join(%w(spec fixtures velocity.xlsx)), :xlsx],
         [File.join(%w(spec fixtures velocity.csv)), :csv],
+        [File.join(%w(spec fixtures sesame_street_blog.xlsx)), :xlsx],
         ["a,b,c\n1,2,3", :csv]
       ]
     end
