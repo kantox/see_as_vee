@@ -36,7 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rubyzip', '~> 2.3.2'
   # spec.add_dependency 'ruby-filemagic', require: false
 
-  spec.add_development_dependency 'bundler', '> 2.2.0'
+  spec.add_development_dependency 'bundler', '> 2.3.0'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'pry'
@@ -46,8 +46,6 @@ Gem::Specification.new do |spec|
   # This needs to updated and sanitized
   spec.add_development_dependency 'dry-validation', '~> 0.13.3'
   spec.add_development_dependency 'dry-configurable', '~> 0.11.6'
-  spec.add_development_dependency 'dry-container', '0.6'
-  spec.add_development_dependency 'dry-core', '>= 0.4.7', '~> 0.4'
 
   # spec.add_development_dependency 'codeclimate-test-reporter'
   # spec.add_development_dependency 'simplecov', '~> 0.12.0'
