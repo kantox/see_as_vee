@@ -11,15 +11,24 @@ on:
 jobs:
   test:
     name: 'Ruby: ${{ matrix.ruby-version }}'
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     continue-on-error: ${{ matrix.allow-failure }}
     strategy:
       fail-fast: false
       matrix:
-        ruby-version: ['3.3']
+        ruby-version: ['4.0']
         allow-failure: [false]
         frozen-string: [false]
         include:
+          - ruby-version: '3.5'
+            allow-failure: true
+            frozen-string: true
+          - ruby-version: '3.4'
+            allow-failure: true
+            frozen-string: true
+          - ruby-version: '3.3'
+            allow-failure: true
+            frozen-string: true
           - ruby-version: '3.2'
             allow-failure: true
             frozen-string: true
@@ -33,9 +42,6 @@ jobs:
             allow-failure: false
             frozen-string: true
           - ruby-version: '2.6'
-            allow-failure: false
-            frozen-string: true
-          - ruby-version: '2.4'
             allow-failure: false
             frozen-string: true
     steps:
