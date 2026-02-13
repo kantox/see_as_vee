@@ -12,7 +12,7 @@ on:
 jobs:
   test:
     name: 'Ruby: ${{ matrix.ruby-version }}'
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     continue-on-error: ${{ matrix.allow-failure }}
     strategy:
       fail-fast: false
