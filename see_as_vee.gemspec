@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   # superclass mismatch for class Loader
   #
   spec.add_dependency 'simple_xlsx_reader', '~> 1.0.5'
-  spec.add_dependency 'caxlsx', '~> 3.4.1'
+  spec.add_dependency 'caxlsx', '>= 4.4.1'
   # spec.add_dependency 'ruby-filemagic', require: false
 
   spec.add_development_dependency 'bundler', '> 2.3.0'
