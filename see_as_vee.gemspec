@@ -48,6 +48,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'dry-configurable', '~> 0.11.6'
   spec.add_development_dependency 'dry-container', '0.6'
   spec.add_development_dependency 'dry-core', '>= 0.4.7', '~> 0.4'
+
   # spec.add_development_dependency 'codeclimate-test-reporter'
   # spec.add_development_dependency 'simplecov', '~> 0.12.0'
 end

@@ -35,20 +35,15 @@ jobs:
           - ruby-version: '2.6'
             allow-failure: false
             frozen-string: true
+          - ruby-version: '2.4'
+            allow-failure: false
+            frozen-string: true
     steps:
-      - uses: actions/checkout@v4
-
+      - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby-version }}
-          bundler-cache: false
-
-      - name: Install bundler
-        run: |
-          gem update --system 3.2.3
-          gem install bundler
-          bundle install
-
+          bundler-cache: true
       - run: echo "{RUBYOPT}={--enable-frozen-string-literal}" >> $GITHUB_ENV
         if: ${{ matrix.frozen-string }}
       - run: bin/rake
