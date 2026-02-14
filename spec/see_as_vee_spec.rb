@@ -145,29 +145,30 @@ describe SeeAsVee do
   end
 
   it "applies schema as checker" do
-    m = %w[Params Form].detect(&Dry::Validation.method(:respond_to?))
-    schema = Dry::Validation.public_send(m) do
-      required(:reference) { filled? > str? }
-      required(:parent).value(:empty?)
-      required(:user).filled(:str?)
-      required(:trade_date).filled(:date?)
-      required(:status).filled(:str?)
-      required(:legal_entity).filled(:str?)
-      required(:counterpart).filled(:str?)
-      required(:product).filled(:str?)
-      required(:action).filled(:str?)
-      required(:currency_1).filled(:str?)
-      required(:currency_2).filled(:str?)
-      required(:notional).filled(:float?)
-      required(:notional_currency).filled(:str?)
-      required(:effective_period).filled(:str?)
-      required(:effective_date).filled(:date?)
-      required(:maturity_period).filled(:str?)
-      required(:maturity_date).filled(:date?)
-      required(:spot_rate).filled(:float?)
-      required(:near_forward_rate).filled(:float?)
+    contract = Class.new(Dry::Validation::Contract) do
+      params do
+        required(:reference).filled(:string)
+        required(:parent).value(:empty?)
+        required(:user).filled(:string)
+        required(:trade_date).filled(:date)
+        required(:status).filled(:string)
+        required(:legal_entity).filled(:string)
+        required(:counterpart).filled(:string)
+        required(:product).filled(:string)
+        required(:action).filled(:string)
+        required(:currency_1).filled(:string)
+        required(:currency_2).filled(:string)
+        required(:notional).filled(:float)
+        required(:notional_currency).filled(:string)
+        required(:effective_period).filled(:string)
+        required(:effective_date).filled(:date)
+        required(:maturity_period).filled(:string)
+        required(:maturity_date).filled(:date)
+        required(:spot_rate).filled(:float)
+        required(:near_forward_rate).filled(:float)
+      end
     end
-    validation = SeeAsVee.validate('spec/fixtures/velocity.csv', schema)
+    validation = SeeAsVee.validate('spec/fixtures/velocity.csv', contract.new)
     expect(validation.all? { |vr| vr.errors.empty? }).to be true
   end
 

@@ -33,16 +33,13 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'caxlsx', '~> 3.4.1'
   # spec.add_dependency 'ruby-filemagic', require: false
 
-  spec.add_development_dependency 'bundler', '> 2.3.0'
+  spec.add_development_dependency 'bundler', '>= 2.3.0'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'awesome_print'
-  # TODO: There are some issues with dry gems versions for some ruby versions
-  # and specs failing
-  # This needs to updated and sanitized
-  spec.add_development_dependency 'dry-validation', '~> 0.13.3'
-  spec.add_development_dependency 'dry-configurable', '~> 0.11.6'
+  spec.add_development_dependency 'dry-validation', '>= 1.5.6'
+  spec.add_development_dependency 'dry-configurable', '>= 0.11.6'
 
   # spec.add_development_dependency 'codeclimate-test-reporter'
   # spec.add_development_dependency 'simplecov', '~> 0.12.0'
