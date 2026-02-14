@@ -30,10 +30,7 @@ Gem::Specification.new do |spec|
   # superclass mismatch for class Loader
   #
   spec.add_dependency 'simple_xlsx_reader', '~> 1.0.5'
-  # TODO: This gem not maintained anymore. Migration to `caxlsx` pending
-  spec.add_dependency 'axlsx'
-  spec.add_dependency 'zip-zip'
-  spec.add_dependency 'rubyzip', '~> 2.3.2'
+  spec.add_dependency 'caxlsx', '~> 3.4.1'
   # spec.add_dependency 'ruby-filemagic', require: false
 
   spec.add_development_dependency 'bundler', '> 2.3.0'
