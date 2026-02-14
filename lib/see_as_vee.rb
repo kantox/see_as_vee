@@ -48,7 +48,9 @@ module SeeAsVee
   module_function :harvest
 
   def validate whatever, schema
-    SeeAsVee::Sheet.new(whatever).map(&schema)
+    SeeAsVee::Sheet.new(whatever).map do |row|
+      schema.call(row)
+    end
   end
   module_function :validate
 

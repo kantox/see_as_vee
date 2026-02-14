@@ -59,14 +59,15 @@ Or install it yourself as:
 From the version `0.4.0` we support dry validation of the data given:
 
 ```ruby
-# Dry::Validation.Form if you are using dry-validation < 0.12
-schema = Dry::Validation.Params do
-  required(:reference) { filled? > str? }
-  required(:trade_date).filled(:date?)
-  required(:notional).filled(:float?)
-  required(:notional_currency).filled(:str?)
+contract = Class.new(Dry::Validation::Contract) do
+  params do
+    required(:reference) { filled? > str? }
+    required(:trade_date).filled(:date)
+    required(:notional).filled(:float)
+    required(:notional_currency).filled(:string)
+  end
 end
-validation = SeeAsVee.validate('spec/fixtures/velo.csv', schema)
+validation = SeeAsVee.validate('spec/fixtures/velocity.csv', contract.new)
 expect(validation.all? { |vr| vr.errors.empty? }).to be true
 ```
 
