@@ -11,7 +11,7 @@ on:
 jobs:
   test:
     name: 'Ruby: ${{ matrix.ruby-version }}'
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     continue-on-error: ${{ matrix.allow-failure }}
     strategy:
       fail-fast: false
@@ -44,7 +44,6 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true
-
       - run: echo "{RUBYOPT}={--enable-frozen-string-literal}" >> $GITHUB_ENV
         if: ${{ matrix.frozen-string }}
       - run: bin/rake
