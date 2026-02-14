@@ -38,7 +38,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'awesome_print'
-  spec.add_development_dependency 'dry-validation', '>= 1.7.0'
+  spec.add_development_dependency 'dry-validation', '>= 1.5.6'
   spec.add_development_dependency 'dry-configurable', '>= 0.13.0'
 
   # spec.add_development_dependency 'codeclimate-test-reporter'
