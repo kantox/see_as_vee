@@ -42,7 +42,7 @@ module SeeAsVee
     sheet = SeeAsVee::Sheet.new whatever, formatters: formatters, checkers: checkers, skip_blank_rows: skip_blank_rows
     return sheet.each unless block_given?
 
-    sheet.each(&Proc.new)
+    sheet.each(&Proc.new {})
     sheet
   end
   module_function :harvest
