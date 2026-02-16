@@ -30,31 +30,21 @@ Gem::Specification.new do |spec|
   # superclass mismatch for class Loader
   #
   spec.add_dependency 'simple_xlsx_reader', '~> 1.0.5'
-  # TODO: This gem not maintained anymore. Migration to `caxlsx` pending
-  spec.add_dependency 'caxlsx', '~> 3.4.1'
-  if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.0.0')
-    spec.add_dependency 'ostruct'
-  end
-  spec.add_dependency 'rubyzip', '~> 2.4'
+
+  spec.add_dependency 'caxlsx', '>= 3.4.1'
+  spec.add_dependency 'ostruct'
+  spec.add_dependency 'rubyzip', '>= 2.3.2'
   # spec.add_dependency 'ruby-filemagic', require: false
-  if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.7.0')
-    spec.add_dependency 'dry-validation', '~> 1.0'
-    spec.add_dependency 'dry-configurable', '~> 1.0'
-  else
-    spec.add_dependency 'dry-validation', '~> 0.13.3'
-    spec.add_dependency 'dry-configurable', '~> 0.11.6'
-  end
 
   spec.add_development_dependency 'bundler'
-  if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('3.0.0')
-    spec.add_development_dependency 'rake', '> 13.0'
-  else
-    spec.add_development_dependency 'rake', '> 10.0'
-  end
+  spec.add_development_dependency 'rake', '>= 10.5.0'
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'awesome_print'
 
-  # spec.add_development_dependency 'codeclimate-test-reporter'
+  # optional runtime dependencies
+  spec.add_development_dependency 'dry-validation', '>= 0.10.7'
+  spec.add_development_dependency 'dry-configurable', '>= 0.7.0'
+
   # spec.add_development_dependency 'simplecov', '~> 0.12.0'
 end
