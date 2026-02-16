@@ -16,10 +16,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby-version: ['3.3']
+        ruby-version: ['4.0']
         allow-failure: [false]
-        frozen-string: [false]
+        frozen-string: [true]
         include:
+          - ruby-version: '3.4'
+            allow-failure: true
+            frozen-string: true
+          - ruby-version: '3.3'
+            allow-failure: true
+            frozen-string: true
           - ruby-version: '3.2'
             allow-failure: true
             frozen-string: true
