@@ -145,13 +145,7 @@ describe SeeAsVee do
   end
 
   it "applies schema as checker" do
-    dry_class =
-      if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new('2.7.0')
-        Dry::Schema
-      else
-        Dry::Validation
-      end
-
+    dry_class = Dry::Schema
     m = %w[Params Form].detect(&dry_class.method(:respond_to?))
     expect(m).not_to be_nil
 
