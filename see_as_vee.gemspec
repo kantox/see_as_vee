@@ -33,6 +33,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'caxlsx', '>= 3.4.1'
   spec.add_dependency 'ostruct'
+  spec.add_dependency 'csv'
   spec.add_dependency 'rubyzip', '>= 2.3.2'
   # spec.add_dependency 'ruby-filemagic', require: false
 
